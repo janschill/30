@@ -1,0 +1,65 @@
+@keyframes blink {
+  50% {
+      opacity: 0;
+  }
+}
+@keyframes rotate {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+body {
+  background-color: #7600c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.date-box {
+  padding: 20px 40px;
+  border: 10px solid #ff8000;
+  box-shadow: 10px 16px #ff2418;
+  animation: rotate 10s linear infinite;
+  background: #ffffff;
+}
+
+h1 {
+  font-family: 'Times New Roman', serif;
+  font-size: 5em;
+  font-weight: 100;
+  color: #ff8000;
+  text-align: center;
+  margin: 0;
+}
+
+.bang {
+font-size: 10rem;
+position: absolute;
+}
+
+.top-left {
+top: 0;
+left: 0;
+animation: blink 500ms ease 500ms infinite;
+}
+.top-right {
+top: 0;
+right: 0;
+animation: blink 500ms ease 250ms infinite;
+}
+.bottom-left {
+bottom: 0;
+left: 0;
+animation: blink 500ms ease 750ms infinite;
+}
+.bottom-right {
+bottom: 0;
+right: 0;
+animation: blink 500ms ease 50ms infinite;
+}

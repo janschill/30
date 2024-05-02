@@ -1,0 +1,54 @@
+{{define "body"}}
+<div>
+  <h1>Welcome, {{.User.Name}}!</h1>
+</div>
+<div>
+  <script>
+    let userData = JSON.parse('{{ .UserJson }}');
+  </script>
+  <script src="/static/js/form.js"></script>
+
+  <form method="POST">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" value="{{.User.Name}}"><br>
+
+    <label for="comesby">Comes By:</label><br>
+    <select id="comesby" name="comesby">
+      <option value="car">Car</option>
+      <option value="public transport">Public Transport</option>
+      <option value="don't know">Don't Know</option>
+    </select><br>
+
+    <label for="bringswith">Brings With:</label><br>
+    <input type="checkbox" id="alcohol" name="bringswith" value="alcohol">
+    <label for="alcohol">Alcohol</label><br>
+    <input type="checkbox" id="food" name="bringswith" value="food">
+    <label for="food">Food</label><br>
+    <input type="checkbox" id="partner" name="bringswith" value="partner">
+    <label for="food">my partner</label><br>
+    <input type="checkbox" id="friend" name="bringswith" value="friend">
+    <label for="food">a friend</label><br>
+    <input type="checkbox" id="dog" name="bringswith" value="dog">
+    <label for="food">my dog</label><br>
+    <input type="checkbox" id="dye" name="bringswith" value="dye">
+    <label for="food">Dye</label><br>
+    <div id="newCheckboxes"></div>
+    <input type="text" id="other" name="bringswith" placeholder="Other"><br>
+    <button id="add">Add</button>
+
+    <label for="stays">Stays:</label><br>
+    <input type="checkbox" id="0" name="stays" value="0">
+    <label for="0">0</label><br>
+    <input type="checkbox" id="1" name="stays" value="1">
+    <label for="1">1</label><br>
+    <input type="checkbox" id="2" name="stays" value="2">
+    <label for="2">2</label><br>
+    <input type="checkbox" id="3" name="stays" value="3">
+    <label for="3">3</label><br>
+    <input type="checkbox" id="4" name="stays" value="4">
+    <label for="4">4</label><br>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+{{end}}
