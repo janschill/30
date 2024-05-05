@@ -22,12 +22,12 @@ func init() {
 }
 
 type User struct {
-  Name       string
-  URL        string
-  ComesBy    string
-  BringsWith []string
-  Stays      []int
-  Emoji      string
+  URL        string             `bson:"url"`
+  Name       string             `bson:"name"`
+  ComesBy    string             `bson:"comesby"`
+  BringsWith []string           `bson:"bringswith"`
+  Stays      []bool              `bson:"stays"`
+  Emoji      string             `bson:"emoji"`
 }
 
 func GetUserByUrl(url string) (User, error) {
@@ -69,13 +69,14 @@ func UpdateUser(user User) (User, error) {
   filter := bson.M{"url": user.URL}
   update := bson.M{
     "$set": bson.M{
-      "Name":       user.Name,
-      "ComesBy":    user.ComesBy,
-      "BringsWith": user.BringsWith,
-      "Stays":      user.Stays,
+      "name":       user.Name,
+      "comesby":    user.ComesBy,
+      "bringswith": user.BringsWith,
+      "stays":      user.Stays,
     },
   }
   _, err := collection.UpdateOne(context.Background(), filter, update)
+
   if err != nil {
     return User{}, err
   }

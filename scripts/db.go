@@ -5,23 +5,47 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
 	"time"
 
+	"30.janschill.de/main/models"
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type User struct {
-	Name       string
-	URL        string
-	ComesBy    string
-	BringsWith []string
-	Stays      []int
-	Emoji      string
+func main() {
+	if len(os.Args) < 2 {
+			log.Fatal("No command provided")
+	}
+
+	switch os.Args[1] {
+	case "reset":
+			reset()
+	case "seed":
+			seed()
+	default:
+			log.Fatal("Unknown command: " + os.Args[1])
+	}
 }
 
+func reset() {
+	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://localhost:27017"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(context.Background())
+
+	collection := client.Database("bday").Collection("users")
+
+	_, err = collection.DeleteMany(context.Background(), bson.D{})
+	if err != nil {
+			log.Fatal(err)
+	}
+
+	log.Println("All records deleted successfully.")
+}
 
 func shuffleSlice(slice []string) {
 	rand.Seed(time.Now().UnixNano())
@@ -30,7 +54,7 @@ func shuffleSlice(slice []string) {
 	})
 }
 
-func main() {
+func seed() {
 	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
@@ -50,12 +74,12 @@ func main() {
 
 	for index, userName := range usersNames {
 		fmt.Println("Inserting ", userName)
-		_, err = collection.InsertOne(context.Background(), User{
+		_, err = collection.InsertOne(context.Background(), models.User{
 			Name:       userName,
 			URL:        uuid.New().String(),
 			ComesBy:    "",
 			BringsWith: []string{},
-			Stays:      []int{},
+			Stays:      []bool{false, false, false, false, false},
 			Emoji:      emojis[index%len(emojis)],
 		})
 		if err != nil {
@@ -63,3 +87,4 @@ func main() {
 		}
 	}
 }
+
