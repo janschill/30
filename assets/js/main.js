@@ -31,4 +31,16 @@ function initBringsWithAdder() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initBringsWithAdder()
+
+  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      let parent = this.closest('.checkbox-item--brings');
+      if (this.checked) {
+        parent.style.backgroundColor = '#0077b6';
+      } else {
+        parent.style.backgroundColor = '';
+      }
+    });
+  });
 });
