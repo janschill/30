@@ -4,6 +4,8 @@ function initBringsWithAdder() {
     let input = document.getElementById('other');
     let newCheckbox = document.createElement('input');
     let label = document.createElement('label');
+    let wrapper = document.createElement('div');
+    let span = document.createElement('span');
 
     newCheckbox.type = 'checkbox';
     newCheckbox.id = input.value;
@@ -12,11 +14,14 @@ function initBringsWithAdder() {
     newCheckbox.checked = true;
 
     label.htmlFor = input.value;
-    label.appendChild(document.createTextNode(input.value));
+    span.textContent = input.value;
 
-    document.getElementById('newCheckboxes').appendChild(newCheckbox);
-    document.getElementById('newCheckboxes').appendChild(label);
-    document.getElementById('newCheckboxes').appendChild(document.createElement('br'));
+    label.appendChild(newCheckbox);
+    label.appendChild(span);
+    wrapper.appendChild(label);
+    wrapper.className = 'cat';
+
+    document.getElementById('newCheckboxes').appendChild(wrapper);
 
     input.value = '';
   });
@@ -31,16 +36,4 @@ function initBringsWithAdder() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initBringsWithAdder()
-
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-      let parent = this.closest('.checkbox-item--brings');
-      if (this.checked) {
-        parent.style.backgroundColor = '#0077b6';
-      } else {
-        parent.style.backgroundColor = '';
-      }
-    });
-  });
 });
