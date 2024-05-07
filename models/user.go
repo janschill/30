@@ -19,7 +19,7 @@ func init() {
 	password := os.Getenv("MONGODB_PASSWORD")
 
   var err error
-	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@localhost:27017", username, password)))
+	client, err = mongo.Connect(context.Background(), options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@localhost:27017", username, password)))
 	if err != nil {
 		log.Fatal(err)
 	}
