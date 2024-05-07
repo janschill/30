@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -14,11 +15,14 @@ var client *mongo.Client
 
 // Gets called automatically when the package is loaded
 func init() {
+  username := os.Getenv("MONGODB_USERNAME")
+	password := os.Getenv("MONGODB_PASSWORD")
+
   var err error
-  client, err = mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb://localhost:27017"))
-  if err != nil {
-    log.Fatal(err)
-  }
+	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@localhost:27017", username, password)))
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 type User struct {

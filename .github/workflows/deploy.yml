@@ -19,7 +19,7 @@ jobs:
         go-version: 1.22.3
 
     - name: Build binary
-      run: go build -o bday .
+      run: GOOS=linux GOARCH=amd64 go build -o bday .
 
     - name: Install SSH key
       uses: webfactory/ssh-agent@v0.5.3
@@ -27,7 +27,7 @@ jobs:
         ssh-private-key: ${{ secrets.DIGITAL_OCEAN_SSH_KEY }}
 
     - name: Transfer binary to DigitalOcean
-      run: scp main root@138.197.183.255:/usr/local/bin/bday
+      run: scp bday root@138.197.183.255:/usr/local/bin/bday
 
     - name: Restart service on DigitalOcean
       run: |
