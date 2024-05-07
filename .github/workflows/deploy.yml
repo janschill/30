@@ -1,0 +1,36 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Build binary
+      run: go build -o bday .
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.DIGITAL_OCEAN_SSH_KEY }}
+
+    - name: Transfer binary to DigitalOcean
+      run: scp main root@138.197.183.255:/usr/local/bin/bday
+
+    - name: Restart service on DigitalOcean
+      run: |
+        ssh -o StrictHostKeyChecking=no root@138.197.183.255 <<EOF
+          systemctl restart bday
+        EOF

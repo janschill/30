@@ -1,0 +1,179 @@
+{{define "body"}}
+<header>
+  <h1>Hallo, <i>{{.User.Name}}</i> !</h1>
+</header>
+<div>
+  <script>
+    let userData = JSON.parse('{{ .UserJson }}');
+  </script>
+  <script src="/static/js/form.js"></script>
+
+  <article>
+    <p>30 years, cozy, beer, friends</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis similique minus impedit cum doloremque, facere
+      repellendus molestiae nulla accusantium! Placeat quia inventore perspiciatis totam ullam veritatis nisi voluptate
+      eaque culpa?</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis similique minus impedit cum doloremque, facere
+      repellendus molestiae nulla accusantium! Placeat quia inventore perspiciatis totam ullam veritatis nisi voluptate
+      eaque culpa?</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis similique minus impedit cum doloremque, facere
+      repellendus molestiae nulla accusantium! Placeat quia inventore perspiciatis totam ullam veritatis nisi voluptate
+      eaque culpa?</p>
+  </article>
+
+  <form method="POST">
+    <h2>Would you like to be called something else?</h2>
+    <input class="input" type="text" id="name" name="name" value="{{.User.Name}}"><br>
+    <h2>I am coming by</h2>
+    <select class="dropdown" id="comesby" name="comesby">
+      <option {{if eq .User.ComesBy "car" }}selected{{end}} value="car">Car</option>
+      <option {{if eq .User.ComesBy "public transport" }}selected{{end}} value="public transport">Public Transport
+      </option>
+      <option {{if eq .User.ComesBy "don't know" }}selected{{end}} value="don't know">Don't Know</option>
+    </select><br>
+
+    <h2>I am bringing with</h2>
+    <div class="margin-bottom">Have a look at the bottom of the page on who brings what. <a href="#folks">Click</a>
+    </div>
+
+    <div>
+      {{range .User.BringsWith}}
+      {{ $value := . }}
+      {{ if $value }}
+      <div class="cat">
+        <label for="{{ $value }}">
+          <input class="" type="checkbox" id="{{ $value }}" name="bringswith" value="{{ $value }}" checked>
+          <span>{{ $value }}</span>
+        </label>
+      </div>
+      {{ end }}
+      {{end}}
+    </div>
+
+
+    <div>
+      {{range .DefaultBringsWith}}
+      {{ $value := . }}
+      <div class="cat">
+        <label for="{{ $value }}">
+          <input class="" type="checkbox" id="{{ $value }}" name="bringswith" value="{{ $value }}">
+          <span>{{ $value }}</span>
+        </label>
+      </div>
+      {{end}}
+    </div>
+
+    <div id="newCheckboxes"></div>
+    <div style="clear: both;">
+      <input type="text" id="other" name="bringswith" placeholder="... my favorite ..." class="input-brings">
+      <button id="add" class="nb-button blue rounded">Add</button>
+    </div>
+
+    <h2>When will you be there?</h2><br>
+    <div class="parent">
+      <div class="div1">May 24th</div>
+      <div class="div2">May 25th</div>
+      <div class="div3">May 26th</div>
+      <div class="div4 checkbox-container">
+        <div class="checkbox-item checkbox-item--end">
+          <label for="0">
+            <input class="checkbox" type="checkbox" id="0" name="stays" value="0" {{if index .User.Stays
+              0}}checked{{end}}>
+            <span>
+              <svg class="icon" width="22" height="23" viewBox="0 0 22 23" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.3682 0C4.54816 0.568536 5.2186e-07 5.47563 0 11.445C-5.55246e-07 17.7963 5.14872 22.945 11.5 22.945C15.8813 22.945 19.6904 20.4949 21.6318 16.89C21.2595 16.9264 20.8819 16.945 20.5 16.945C14.1487 16.945 9 11.7963 9 5.44501C9 3.47507 9.49532 1.62082 10.3682 0Z"
+                  fill="black" />
+              </svg>
+            </span>
+          </label>
+        </div>
+        <div class="checkbox-item checkbox-item--start">
+          <label for="1">
+            <input class="checkbox-item" type="checkbox" id="1" name="stays" value="1" {{if index .User.Stays
+              1}}checked{{end}}>
+            <span><svg class="icon" width="23" height="12" viewBox="0 0 23 12" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M22.9893 12C22.9964 11.8342 23 11.6675 23 11.5C23 5.14873 17.8513 0 11.5 0C5.14873 0 0 5.14873 0 11.5C0 11.6675 0.00358295 11.8342 0.0106745 12H22.9893Z"
+                  fill="black" />
+              </svg>
+            </span>
+          </label>
+        </div>
+        <div class="checkbox-item checkbox-item--middle">
+          <label for="2">
+            <input class="checkbox-item" type="checkbox" id="2" name="stays" value="2" {{if index .User.Stays
+              2}}checked{{end}}>
+            <span>
+              <svg class="icon" width="21" height="21" viewBox="0 0 21 21" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle class="circle" cx="10.5" cy="10.5" r="10.5" fill="black" />
+              </svg>
+            </span>
+          </label>
+        </div>
+        <div class="checkbox-item checkbox-item--end">
+          <label for="3">
+            <input class="checkbox-item" type="checkbox" id="3" name="stays" value="3" {{if index .User.Stays
+              3}}checked{{end}}>
+            <span>
+              <svg class="icon" width="22" height="23" viewBox="0 0 22 23" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.3682 0C4.54816 0.568536 5.2186e-07 5.47563 0 11.445C-5.55246e-07 17.7963 5.14872 22.945 11.5 22.945C15.8813 22.945 19.6904 20.4949 21.6318 16.89C21.2595 16.9264 20.8819 16.945 20.5 16.945C14.1487 16.945 9 11.7963 9 5.44501C9 3.47507 9.49532 1.62082 10.3682 0Z"
+                  fill="black" />
+              </svg>
+            </span>
+          </label>
+        </div>
+        <div class="checkbox-item checkbox-item--start">
+          <label for="4">
+            <input class="checkbox-item" type="checkbox" id="4" name="stays" value="4" {{if index .User.Stays
+              4}}checked{{end}}>
+            <span><svg class="icon" width="23" height="12" viewBox="0 0 23 12" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M22.9893 12C22.9964 11.8342 23 11.6675 23 11.5C23 5.14873 17.8513 0 11.5 0C5.14873 0 0 5.14873 0 11.5C0 11.6675 0.00358295 11.8342 0.0106745 12H22.9893Z"
+                  fill="black" />
+              </svg>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <input type="submit" value="Save" class="nb-button orange rounded">
+  </form>
+
+  <div class="folks" id="folks">
+    <ul>
+      {{range .Users}}
+      {{ $user := . }}
+      <li>
+        <strong>{{$user.Name}}</strong> is coming by {{$user.ComesBy}}
+        <div>
+          on these days:
+          <span class="comes end {{if not (index $user.Stays 0)}}fill{{end}}"></span>
+          <span class="comes start {{if not (index $user.Stays 1)}}fill{{end}}"></span>
+          <span class="comes middle {{if not (index $user.Stays 2)}}fill{{end}}"></span>
+          <span class="comes end {{if not (index $user.Stays 3)}}fill{{end}}"></span>
+          <span class="comes start {{if not (index $user.Stays 4)}}fill{{end}}"></span>
+        </div>
+        <div>
+          and brings:
+          <ul>
+            {{range $user.BringsWith}}
+            {{ if . }}
+            <li>{{.}}</li>
+            {{end}}
+            {{end}}
+          </ul>
+        </div>
+      </li>
+      {{end}}
+    </ul>
+  </div>
+</div>
+{{end}}
